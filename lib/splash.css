@@ -744,3 +744,178 @@ html.moss-lock body {
 @media (prefers-reduced-motion: reduce) {
   .moss-corefx-dot, .moss-corefx-ring { animation: none; }
 }
+
+/* ── 顶部挂载横梁：滑车左右移动 + 关节摆动 ─────────────────────── */
+
+.moss-gantry {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 92px;
+  z-index: 6;
+  pointer-events: none;
+  opacity: .92;
+}
+
+/* 横梁本体 */
+.moss-gantry-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 10px;
+  height: 16px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 46px, rgba(0,0,0,.35) 46px 48px),
+    linear-gradient(180deg, #4a4d52 0%, #2a2c30 42%, #14161a 100%);
+  border-top: 1px solid rgba(255,255,255,.14);
+  border-bottom: 1px solid rgba(0,0,0,.65);
+  box-shadow: 0 6px 18px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);
+}
+
+/* 横梁两端法兰 */
+.moss-gantry-rail::before,
+.moss-gantry-rail::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  width: 18px;
+  height: 28px;
+  background: linear-gradient(180deg, #3b3e43, #16181b);
+  border: 1px solid rgba(0,0,0,.6);
+}
+
+.moss-gantry-rail::before { left: -4px; }
+.moss-gantry-rail::after { right: -4px; }
+
+/* 滑车 */
+.moss-gantry-carriage {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 64px;
+  height: 30px;
+  margin-left: -32px;
+  background: linear-gradient(180deg, #565a60 0%, #23262a 60%, #101216 100%);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.12);
+  animation: moss-carriage 15s ease-in-out infinite;
+}
+
+/* 滑车滚轮 */
+.moss-gantry-carriage::before,
+.moss-gantry-carriage::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #8b9098, #1a1c1f);
+  border: 1px solid rgba(0,0,0,.7);
+}
+
+.moss-gantry-carriage::before { left: 8px; }
+.moss-gantry-carriage::after { right: 8px; }
+
+/* 吊挂关节 */
+.moss-gantry-joint {
+  position: absolute;
+  left: 50%;
+  top: 28px;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #7d838c, #23262a 62%, #0e1012 100%);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 0 10px rgba(0,0,0,.6);
+  transform-origin: 50% 0%;
+  animation: moss-joint-swing 3.8s ease-in-out infinite;
+}
+
+/* 吊臂 */
+.moss-gantry-arm {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  width: 4px;
+  height: 38px;
+  margin-left: -2px;
+  background: linear-gradient(180deg, #4b4f55, #191b1e);
+  border-radius: 2px;
+}
+
+/* 末端 MOSS 核心 */
+.moss-gantry-core {
+  position: absolute;
+  left: 50%;
+  top: 46px;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff7a4a 0%, #ff4a26 45%, rgba(255,60,30,.15) 72%, transparent 78%);
+  box-shadow: 0 0 16px rgba(255,90,50,.55);
+  animation: moss-gantry-core 2.4s ease-in-out infinite;
+}
+
+/* 执行态：滑车加速、关节摆动加剧、核心更亮 */
+.moss-gantry.run .moss-gantry-carriage { animation-duration: 7s; }
+.moss-gantry.run .moss-gantry-joint { animation-duration: 2.1s; }
+.moss-gantry.run .moss-gantry-core {
+  box-shadow: 0 0 26px rgba(255,90,50,.9);
+  animation-duration: 1.1s;
+}
+
+@keyframes moss-carriage {
+  0%   { transform: translateX(-34vw); }
+  50%  { transform: translateX(34vw); }
+  100% { transform: translateX(-34vw); }
+}
+
+@keyframes moss-joint-swing {
+  0%, 100% { transform: rotate(-8deg); }
+  50%      { transform: rotate(8deg); }
+}
+
+@keyframes moss-gantry-core {
+  0%, 100% { transform: scale(.86); opacity: .65; }
+  50%      { transform: scale(1.22); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moss-gantry-carriage,
+  .moss-gantry-joint,
+  .moss-gantry-core { animation: none; }
+}
+
+/* 横梁吊挂的 MOSS 立绘 */
+.moss-gantry-unit {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  width: 96px;
+  margin-left: -48px;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,.6));
+  animation: moss-unit-bob 4.2s ease-in-out infinite;
+}
+
+.moss-gantry.run .moss-gantry-unit {
+  width: 104px;
+  margin-left: -52px;
+  animation-duration: 1.9s;
+}
+
+@keyframes moss-unit-bob {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50%      { transform: translateY(-4px) rotate(1.2deg); }
+}
+
+/* 启动页盖住桌宠（梁神不该出现在启动页） */
+.moss-root { z-index: 2147483400; }
+
+@media (prefers-reduced-motion: reduce) {
+  .moss-gantry-unit { animation: none; }
+}
