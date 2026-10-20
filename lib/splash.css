@@ -940,3 +940,23 @@ html.moss-lock body {
 @media (prefers-reduced-motion: reduce) {
   .moss-gantry.run .moss-gantry-lens { animation: none; }
 }
+
+/* 3D 版挂载立绘 */
+.moss-gantry-unitwrap {
+  width: 104px;
+  height: 116px;
+  margin-left: -52px;
+}
+
+.moss-gantry-3d {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.moss-gantry-3d.on { display: block; }
+
+/* 3D 生效后隐藏 PNG 的镜头叠光（模型自带发光贴图） */
+.moss-gantry-unitwrap.has3d .moss-gantry-lens { display: none; }

@@ -474,3 +474,15 @@ for f in lib/*.js client/client.js; do node --check "$f"; done
 ## 许可
 
 MIT。界面风格致敬《流浪地球 2》，不含任何影片素材（无剧照、无原声、无字体文件）。
+
+## 3D MOSS（启动页）
+
+横梁上吊挂的不再是 PNG，而是**实时渲染的 550W 模型**：
+
+- 资源：`assets3d/`（moss.fbx + 13 张 512 WebP 贴图 + three.js/FBXLoader 运行时，约 2.1MB）
+- 宿主：`/dsh-startup-moss/3d/<file>` exact 路由（启动时枚举，带 MIME 与 1 天缓存）
+- 渲染：`Moss_arm` 独立 mesh 以其顶端为轴旋转；横梁滑车照常左右行驶
+- 终局（`data-phase=final`）切执行态：发光更强、手臂摆幅加大
+- **兜底**：3D 加载失败时自动回到 PNG（含关节换帧），启动动画不受影响
+
+> ⚠️ 模型与贴图版权归《流浪地球 2》相关美术方，仅作个人主题素材使用。
