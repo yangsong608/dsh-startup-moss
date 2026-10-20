@@ -847,28 +847,9 @@ html.moss-lock body {
   border-radius: 2px;
 }
 
-/* 末端 MOSS 核心 */
-.moss-gantry-core {
-  position: absolute;
-  left: 50%;
-  top: 46px;
-  width: 18px;
-  height: 18px;
-  margin-left: -9px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ff7a4a 0%, #ff4a26 45%, rgba(255,60,30,.15) 72%, transparent 78%);
-  box-shadow: 0 0 16px rgba(255,90,50,.55);
-  animation: moss-gantry-core 2.4s ease-in-out infinite;
-}
-
 /* 执行态：滑车加速、关节摆动加剧、核心更亮 */
 .moss-gantry.run .moss-gantry-carriage { animation-duration: 7s; }
 .moss-gantry.run .moss-gantry-joint { animation-duration: 2.1s; }
-.moss-gantry.run .moss-gantry-core {
-  box-shadow: 0 0 26px rgba(255,90,50,.9);
-  animation-duration: 1.1s;
-}
-
 @keyframes moss-carriage {
   0%   { transform: translateX(-34vw); }
   50%  { transform: translateX(34vw); }
@@ -880,15 +861,9 @@ html.moss-lock body {
   50%      { transform: rotate(8deg); }
 }
 
-@keyframes moss-gantry-core {
-  0%, 100% { transform: scale(.86); opacity: .65; }
-  50%      { transform: scale(1.22); opacity: 1; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .moss-gantry-carriage,
   .moss-gantry-joint,
-  .moss-gantry-core { animation: none; }
 }
 
 /* 横梁吊挂的 MOSS 立绘 */
@@ -903,8 +878,6 @@ html.moss-lock body {
 }
 
 .moss-gantry.run .moss-gantry-unit {
-  width: 104px;
-  margin-left: -52px;
   animation-duration: 1.9s;
 }
 
@@ -918,4 +891,52 @@ html.moss-lock body {
 
 @media (prefers-reduced-motion: reduce) {
   .moss-gantry-unit { animation: none; }
+}
+
+
+/* 立绘容器：镜头红光的定位基准 */
+.moss-gantry-unitwrap {
+  position: absolute;
+  left: 50%;
+  top: 30px;
+  width: 96px;
+  height: 96px;
+  margin-left: -48px;
+}
+
+.moss-gantry-unitwrap .moss-gantry-unit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  margin: 0;
+}
+
+/* 镜头发光：正对机身核心（约 42% / 47%） */
+.moss-gantry-lens {
+  position: absolute;
+  left: 39.2%;
+  top: 55.8%;
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, #ff6a3a 0%, rgba(255,64,32,.55) 42%, transparent 72%);
+  filter: blur(2px);
+  transition: opacity .45s ease;
+}
+
+.moss-gantry.run .moss-gantry-lens {
+  opacity: 1;
+  animation: moss-lens-pulse 1.25s ease-in-out infinite;
+}
+
+@keyframes moss-lens-pulse {
+  0%, 100% { transform: scale(.86); opacity: .62; }
+  45%      { transform: scale(1.18); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moss-gantry.run .moss-gantry-lens { animation: none; }
 }
