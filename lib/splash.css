@@ -800,7 +800,7 @@ html.moss-lock body {
   border: 1px solid rgba(255,255,255,.10);
   border-radius: 4px;
   box-shadow: 0 4px 10px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.12);
-  animation: moss-carriage 15s ease-in-out infinite;
+  /* 滑车固定，不做左右移动 */
 }
 
 /* 滑车滚轮 */
@@ -832,7 +832,7 @@ html.moss-lock body {
   border: 1px solid rgba(255,255,255,.14);
   box-shadow: 0 0 10px rgba(0,0,0,.6);
   transform-origin: 50% 0%;
-  animation: moss-joint-swing 3.8s ease-in-out infinite;
+  /* 顶部挂件不摆动：只保留静止吊挂 */
 }
 
 /* 吊臂 */
@@ -848,18 +848,7 @@ html.moss-lock body {
 }
 
 /* 执行态：滑车加速、关节摆动加剧、核心更亮 */
-.moss-gantry.run .moss-gantry-carriage { animation-duration: 7s; }
-.moss-gantry.run .moss-gantry-joint { animation-duration: 2.1s; }
-@keyframes moss-carriage {
-  0%   { transform: translateX(-34vw); }
-  50%  { transform: translateX(34vw); }
-  100% { transform: translateX(-34vw); }
-}
 
-@keyframes moss-joint-swing {
-  0%, 100% { transform: rotate(-8deg); }
-  50%      { transform: rotate(8deg); }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .moss-gantry-carriage,
@@ -874,17 +863,9 @@ html.moss-lock body {
   width: 96px;
   margin-left: -48px;
   filter: drop-shadow(0 8px 16px rgba(0,0,0,.6));
-  animation: moss-unit-bob 4.2s ease-in-out infinite;
+  /* 顶部挂件保持静止，不做摆/浮动 */
 }
 
-.moss-gantry.run .moss-gantry-unit {
-  animation-duration: 1.9s;
-}
-
-@keyframes moss-unit-bob {
-  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
-  50%      { transform: translateY(-4px) rotate(1.2deg); }
-}
 
 /* 启动页盖住桌宠（梁神不该出现在启动页） */
 .moss-root { z-index: 2147483400; }
