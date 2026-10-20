@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dsh-startup-moss · 预览</title>
+<link rel="stylesheet" href="../lib/splash.css">
+<style>
+  html, body { margin: 0; height: 100%; background: #050405; }
+  /* 模拟 DSH 主界面，用来观察动画结束后是否正确让位 */
+  .fake-app {
+    position: fixed; inset: 0; display: grid; place-items: center;
+    color: #6d6a66; font: 13px/1.6 ui-monospace, Menlo, monospace;
+    background:
+      radial-gradient(ellipse at 50% 0%, #16181d, #0b0c0e 60%, #070809);
+    letter-spacing: .06em;
+  }
+  .fake-app b { display: block; font-size: 15px; color: #b9b5ae; letter-spacing: .30em; margin-bottom: 8px; font-weight: 500; }
+  .bar { position: fixed; left: 12px; bottom: 12px; z-index: 5; display: flex; gap: 8px; font: 11px ui-monospace, monospace; }
+  .bar a { color: #ff8a7a; text-decoration: none; border: 1px solid #40201c; border-radius: 6px; padding: 5px 10px; background: #140a08; }
+</style>
+</head>
+<body>
+  <div class="fake-app">
+    <div>
+      <b>DEEPSEEK HARNESS</b>
+      desktop profile · preview harness
+    </div>
+  </div>
+
+  <div class="bar">
+    <a href="?moss=1">重播</a>
+    <a href="?moss=1&speed=0.4">慢放 0.4×</a>
+    <a href="?moss=1&speed=1">1×</a>
+    <a href="?moss=off">关闭</a>
+  </div>
+
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search)
+      window.__DSH_MOSS__ = {
+        enabled: q.get('moss') !== 'off',
+        mode: 'always',
+        speed: Number(q.get('speed') || 1),
+        facts: {
+          profile: 'desktop',
+          dshVersion: '0.2.1-rc.2',
+          plugins: 24,
+          model: 'deepseek-v3.2',
+          sessions: 12
+        },
+        stats: {
+          dsh: '0.2.1-rc.2',
+          profile: 'dsh-profile-desktop',
+          plugins: { total: 23 },
+          sessions: {
+            total: 10,
+            recent: [
+              { id: '223c422d', workspace: 'deepseek', ago: '4m' },
+              { id: '8974b1bd', workspace: 'deepseek', ago: '18m' },
+              { id: '56328e73', workspace: 'Desktop', ago: '1h' },
+              { id: '964c438e', workspace: 'Desktop', ago: '3h' },
+              { id: '1f9615d9', workspace: 'Desktop', ago: '24h' }
+            ]
+          },
+          cron: { total: 3, enabled: 2, nextAt: null },
+          system: {
+            cpu: { model: 'Apple M4', cores: 10, load1: 4.66 },
+            mem: { usedText: '12.4GB', totalText: '16GB', usedPct: 78 },
+            disk: { freeText: '33GB', totalText: '228.3GB', usedPct: 86 },
+            net: { iface: 'en0', ip: '172.80.1.59' }
+          }
+        }
+      }
+      var root = document.createElement('div')
+      root.id = 'dsh-moss-root'
+      root.className = 'moss-root'
+      document.body.appendChild(root)
+    })()
+  </script>
+  <script src="../lib/splash.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# dsh-startup-moss —— DSH bundle patch
+#
+# 把插件挂进 profile 的配置树。Web 半侧由 package.json 的 dsh.client 自动组装，
+# 这里不用重复声明。
+- insert:
+    - id: dsh-startup-moss
+      name: dsh-startup-moss

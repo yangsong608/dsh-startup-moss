@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dsh-startup-moss · 姿态校验</title>
+<link rel="stylesheet" href="../lib/splash.css">
+<style>
+  html, body { margin: 0; height: 100%; background: #050405; }
+  .moss-root { position: fixed; }
+</style>
+</head>
+<body>
+<div id="dsh-moss-root" class="moss-root" data-phase="emblem"></div>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search)
+  var pose = q.get('pose') || 'emblem'          /* emblem | moss | final */
+  var flipped = pose !== 'emblem'
+
+  var FRONT = [
+    '<g class="moss-front">',
+    '<path d="M8 22 H142 M8 22 V100 M8 100 H142 M142 100 V178 M8 178 H142"/>',
+    '<path d="M170 22 H304 M170 22 V100 M170 100 H304 M304 100 V178 M170 178 H304"/>',
+    '<ellipse cx="387" cy="100" rx="63" ry="78"/>',
+    '<path d="M462 22 L498 178 L534 96 L570 178 L606 22"/>',
+    '</g>'
+  ].join('')
+
+  var BACK = [
+    '<g class="moss-back" transform="rotate(-180 310 100)">',
+    '<path d="M12 178 V26 L81 122 L150 26 V178"/>',
+    '<ellipse cx="237" cy="100" rx="62" ry="78"/>',
+    '<path transform="translate(330 0)" d="M118 40 C110 24 92 18 70 18 H46 C24 18 12 30 12 48 C12 66 24 76 46 80 L80 86 C106 91 120 104 120 124 C120 148 104 164 78 164 H52 C30 164 16 156 10 142"/>',
+    '<path transform="translate(462 0)" d="M118 40 C110 24 92 18 70 18 H46 C24 18 12 30 12 48 C12 66 24 76 46 80 L80 86 C106 91 120 104 120 124 C120 148 104 164 78 164 H52 C30 164 16 156 10 142"/>',
+    '</g>'
+  ].join('')
+
+  var MARK = [
+    '<svg viewBox="0 0 620 200" aria-hidden="true">',
+    '<g class="moss-mark-g" fill="none" stroke="currentColor" stroke-width="15"',
+    ' stroke-linecap="round" stroke-linejoin="round">',
+    FRONT, BACK,
+    '</g></svg>'
+  ].join('')
+
+  var RING = [
+    '<svg viewBox="0 0 200 200" aria-hidden="true">',
+    '<g fill="none" stroke="rgba(255,59,47,.42)">',
+    '<circle cx="100" cy="100" r="97" stroke-width=".5" stroke-dasharray="1.5 7"/>',
+    '<circle cx="100" cy="100" r="84" stroke-width=".9" stroke-dasharray="26 12"/>',
+    '<circle cx="100" cy="100" r="70" stroke-width=".4" stroke-dasharray="3 9"/>',
+    '</g>',
+    '<g stroke="rgba(255,177,107,.70)" stroke-width="1.6" stroke-linecap="round">',
+    '<path d="M100 4 V16"/><path d="M100 184 V196"/>',
+    '<path d="M4 100 H16"/><path d="M184 100 H196"/>',
+    '</g></svg>'
+  ].join('')
+
+  var root = document.getElementById('dsh-moss-root')
+  root.innerHTML = [
+    '<div class="moss-glow"></div>',
+    '<div class="moss-veil"></div>',
+    '<div class="moss-emblem">',
+    '<div class="moss-emblem-inner">',
+    '<div class="moss-ring">' + RING + '</div>',
+    '<div class="moss-mark' + (flipped ? ' moss-mid' : '') + '">' + MARK + '</div>',
+    '<div class="moss-caption">',
+    '<div class="moss-cap-main' + (flipped ? '' : '') + '">' + (flipped ? 'MOSS · 一切为了人类' : '550W · CORE ONLINE') + '</div>',
+    '<div class="moss-cap-sub">' + (flipped ? '550W → MOSS · 自指校验通过' : '550TH GENERATION QUANTUM COMPUTER') + '</div>',
+    '<div class="moss-cap-quote' + (flipped ? ' show' : '') + '">—— 我一直在看着你。</div>',
+    '</div>',
+    '<div class="moss-final' + (pose === 'final' ? ' show' : '') + '">',
+    '<div class="moss-final-brand">DEEPSEEK HARNESS</div>',
+    '<div class="moss-final-line">MOSS ONLINE · 欢迎回来，管理员</div>',
+    '</div>',
+    '</div></div>'
+  ].join('')
+
+  if (flipped) {
+    root.dataset.phase = 'final'
+    root.dataset.flipped = '1'
+  }
+  root.style.opacity = '1'
+})()
+</script>
+</body>
+</html>

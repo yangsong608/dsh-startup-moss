@@ -1,0 +1,15 @@
+<!doctype html><html><head><title>DSH shell (injected)</title><link rel="stylesheet" href="/lib/splash.css"><style id="dsh-startup-moss-critical">.moss-root{position:fixed;inset:0;z-index:2147483000;background:radial-gradient(ellipse 90% 70% at 50% 38%,#160a07 0%,#0a0504 48%,#030202 100%)}html.moss-lock,html.moss-lock body{overflow:hidden!important;overscroll-behavior:none}</style></head><body><div id="dsh-moss-root" class="moss-root"></div><script>window.__DSH_MOSS_BOOT__="index";window.__DSH_MOSS__={"enabled":true,"mode":"session","speed":1,"facts":{}};(function(){try{
+var c=window.__DSH_MOSS__||{};
+var root=document.getElementById('dsh-moss-root');
+var q=location.search||'';
+var forced=/(?:\?|&)moss=(?:1|on|play)(?:&|$)/.test(q);
+var off=!(c.enabled!==false||forced);
+if(!off&&!forced&&c.mode!=='always'&&sessionStorage.getItem('dsh-startup-moss:shown')==='1')off=true;
+if(off){if(root&&root.parentNode)root.parentNode.removeChild(root);document.documentElement.classList.remove('moss-lock');}
+else{document.documentElement.classList.add('moss-lock');
+/* 兜底：脚本 404 / 语法错 / 被拦时，8 秒后无条件放行，绝不锁黑屏 */
+setTimeout(function(){try{var r=document.getElementById('dsh-moss-root');if(r&&r.getAttribute('data-live')!=='1'){if(r.parentNode)r.parentNode.removeChild(r);document.documentElement.classList.remove('moss-lock');}}catch(e){}},8000);}
+}catch(e){}})()</script><script defer src="/lib/splash.js"></script><div id="app">app content behind splash</div><script>
+window.__testEvents=[];
+window.addEventListener('dsh-moss:end',function(e){window.__testEvents.push('end:'+e.detail.natural);document.title='MOSS-DONE';});
+</script><script>setTimeout(function(){window.__testState={boot:window.__DSH_MOSS_BOOT__,live:(document.getElementById("dsh-moss-root")||{}).dataset?document.getElementById("dsh-moss-root").getAttribute("data-live"):null,lock:document.documentElement.className,stored:sessionStorage.getItem("dsh-startup-moss:shown"),root:!!document.getElementById("dsh-moss-root")}},1200)</script></body></html>

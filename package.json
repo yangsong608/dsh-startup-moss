@@ -1,0 +1,62 @@
+{
+  "name": "dsh-startup-moss",
+  "version": "0.5.0",
+  "private": true,
+  "description": "DeepSeek Harness 550W 核心终端：启动动画（550W → 180° 反转 MOSS）+ 同款主题 + 访问门口令",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "client",
+    "cordis.patch.yml",
+    "README.md",
+    "docs",
+    "preview",
+    "test"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "startup",
+    "splash",
+    "moss"
+  ],
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    },
+    "compatibility": {
+      "profiles": [
+        "web",
+        "desktop"
+      ],
+      "_comment": "engines.dsh 是宿主真正评估的字段；本块只给人看。宿主对不匹配的处理是「跳过该 bundle」，因此本插件永远不会阻断 DSH 启动。",
+      "dshReleases": {
+        "0.2.0-rc.1": "compatible",
+        "0.2.0-rc.2": "compatible",
+        "0.2.1-alpha.1": "compatible",
+        "0.2.1-rc.1": "compatible",
+        "0.2.1-rc.2": "compatible (tested)"
+      }
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.0-rc.1 <0.3.0-0",
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "test": "node test/safety.mjs && DSH_STARTUP_MOSS=off node test/killswitch.mjs",
+    "audit": "node test/audit.mjs",
+    "check": "node --check lib/index.js && node --check lib/splash.js && node --check lib/gate.js && node --check lib/hostinfo.js && node --check lib/config.js && node --check lib/theme.js && node --check client/client.js"
+  }
+}
