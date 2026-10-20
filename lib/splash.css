@@ -680,3 +680,67 @@ html.moss-lock body {
   .moss-mark.glitching { animation: none; }
   .moss-mark-g { transition-duration: 700ms; }
 }
+
+
+/* ── MOSS 执行态动效（终局阶段） ─────────────────────────────────── */
+
+.moss-corefx {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .5s ease, transform .5s ease;
+  pointer-events: none;
+}
+
+.moss-corefx.run {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.moss-corefx-dot {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 96, 56, .98) 0%, rgba(255, 64, 32, .5) 42%, transparent 72%);
+  filter: blur(1.5px);
+  animation: moss-core-pulse 1.25s ease-in-out infinite;
+}
+
+.moss-corefx-ring {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 42px;
+  height: 42px;
+  margin-top: -21px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 96, 56, .55);
+  border-top-color: rgba(255, 170, 120, .95);
+  animation: moss-core-spin 2.6s linear infinite;
+}
+
+.moss-corefx-label {
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255, 178, 158, .9);
+  text-shadow: 0 0 12px rgba(255, 90, 50, .45);
+}
+
+@keyframes moss-core-pulse {
+  0%, 100% { transform: scale(.88); opacity: .6; }
+  45% { transform: scale(1.16); opacity: 1; }
+}
+
+@keyframes moss-core-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moss-corefx-dot, .moss-corefx-ring { animation: none; }
+}
